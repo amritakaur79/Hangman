@@ -4,6 +4,8 @@ let POSSIBLE_WORDS = ["obdurate", "aberration", "abnegation", "abrogate", "absco
     "anachronistic", "anathema", "antithesis", "apocryphal", "approbation"];
 let guesses = "";
 let word = "";
+let MAX_GUESSES = 6;
+let guessCount = MAX_GUESSES;
 function newGame() {
     guesses = "";
     let randomIndex = parseInt(Math.random() * POSSIBLE_WORDS.length);
@@ -14,6 +16,9 @@ function newGame() {
 function guess() {
     let input = document.getElementById("guess");
     let letter = input.value;
+    if (word.indexOf(letter) < 0) {
+        guessCount--;
+    }
     guesses += letter;
     updateScreen();
 }
@@ -31,5 +36,9 @@ function updateScreen() {
 
     clue.textContent = clueString;
     let guessArea = document.getElementById("guesses");
-    guessArea.textContent = "Guess Letters: " + guesses;
+    guessArea.textContent = "Guessed Letters: " + guesses;
+
+    let image = document.getElementById("hangmanpic");
+    image.src = `images/hangman${guessCount}.gif`;
+
 }
